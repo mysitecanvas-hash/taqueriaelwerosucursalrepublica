@@ -1,1 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Taquería El Güero | Sucursal República</title>
+
+    <meta
+        name="description"
+        content="Taquería El Güero - Sucursal República">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVEGACIÓN
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <a href="#inicio" class="nav-logo">
+                TAQUERÍA EL GÜERO
+            </a>
+
+            <div class="nav-links">
+
+                <a href="#inicio">Inicio</a>
+                <a href="#menu">Menú</a>
+                <a href="#galeria">Galería</a>
+                <a href="#ubicacion">Ubicación</a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         HERO / PORTADA
+    ====================================================== -->
+
+    <header id="inicio" class="hero">
+
+        <div class="hero-container">
+
+            <div class="hero-content">
+
+                <span class="hero-badge">
+                    SUCURSAL REPÚBLICA
+                </span>
+
+                <h1>
+                    TAQUERÍA<br>
+                    EL GÜERO
+                </h1>
+
+                <p>
+                    El sabor que ya conoces,
+                    ahora más cerca de ti.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#menu" class="btn btn-dark">
+                        VER MENÚ
+                    </a>
+
+                    <a
+                        href="#ubicacion"
+                        class="btn btn-light">
+                        VISÍTANOS
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-image">
+
+                <!--
+                    Imagen principal.
+                    Mientras conseguimos las imágenes locales,
+                    dejamos preparada la estructura.
+                -->
+
+                <div class="image-placeholder">
+
+                    <span>🌮</span>
+
+                    <strong>
+                        EL GÜERO
+                    </strong>
+
+                    <small>
+                        TAQUERÍA
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PRESENTACIÓN
+    ====================================================== -->
+
+    <section class="intro">
+
+        <div class="container intro-container">
+
+            <div class="intro-text">
+
+                <span class="section-label">
+                    BIENVENIDOS
+                </span>
+
+                <h2>
+                    ¡AQUÍ SE COME
+                    <span>BUENO!</span>
+                </h2>
+
+                <p>
+                    Ven a disfrutar nuestros tacos y
+                    especialidades preparados con ese
+                    sabor que caracteriza a Taquería
+                    El Güero.
+                </p>
+
+            </div>
+
+            <div class="intro-decoration">
+                🌮
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MENÚ
+    ====================================================== -->
+
+    <main>
+
+        <section id="menu" class="menu-section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        NUESTRO MENÚ
+                    </span>
+
+                    <h2>
+                        TACOS
+                    </h2>
+
+                    <p>
+                        ¡Elige tus favoritos!
+                    </p>
+
+                </div>
+
+
+                <!--
+                    IMPORTANTE:
+
+                    Estos productos están escritos directamente
+                    por ahora.
+
+                    Posteriormente app.js podrá obtenerlos desde
+                    Google Sheets sin modificar este HTML.
+                -->
+
+                <div
+                    id="productos"
+                    class="menu-grid">
+
+
+                    <!-- PASTOR -->
+
+                    <article
+                        class="menu-item"
+                        data-product-id="pastor">
+
+                        <div class="menu-item-info">
+
+                            <h3>
+                                TACOS DE PASTOR
+                            </h3>
+
+                            <p>
+                                El clásico que nunca falla.
+                            </p>
+
+                        </div>
+
+                        <strong class="price">
+                            $16
+                        </strong>
+
+                    </article>
+
+
+                    <!-- SUADERO -->
+
+                    <article
+                        class="menu-item"
+                        data-product-id="suadero">
+
+                        <div class="menu-item-info">
+
+                            <h3>
+                                TACOS DE SUADERO
+                            </h3>
+
+                            <p>
+                                Suavecitos y llenos de sabor.
+                            </p>
+
+                        </div>
+
+                        <strong class="price">
+                            $16
+                        </strong>
+
+                    </article>
+
+
+                    <!-- LONGANIZA -->
+
+                    <article
+                        class="menu-item"
+                        data-product-id="longaniza">
+
+                        <div class="menu-item-info">
+
+                            <h3>
+                                TACOS DE LONGANIZA
+                            </h3>
+
+                            <p>
+                                Con todo el sabor de la casa.
+                            </p>
+
+                        </div>
+
+                        <strong class="price">
+                            $16
+                        </strong>
+
+                    </article>
+
+
+                    <!-- CAMPECHANOS -->
+
+                    <article
+                        class="menu-item"
+                        data-product-id="campechanos">
+
+                        <div class="menu-item-info">
+
+                            <h3>
+                                TACOS CAMPECHANOS
+                            </h3>
+
+                            <p>
+                                La combinación perfecta.
+                            </p>
+
+                        </div>
+
+                        <strong class="price">
+                            $16
+                        </strong>
+
+                    </article>
+
+
+                    <!-- CABEZA -->
+
+                    <article
+                        class="menu-item"
+                        data-product-id="cabeza">
+
+                        <div class="menu-item-info">
+
+                            <h3>
+                                TACOS DE CABEZA
+                            </h3>
+
+                            <p>
+                                Una opción tradicional.
+                            </p>
+
+                        </div>
+
+                        <strong class="price">
+                            $16
+                        </strong>
+
+                    </article>
+
+
+                    <!-- ORDEN -->
+
+                    <article
+                        class="menu-item menu-item-featured"
+                        data-product-id="orden">
+
+                        <div class="menu-item-info">
+
+                            <h3>
+                                ORDEN
+                            </h3>
+
+                            <p>
+                                Para disfrutar todavía más.
+                            </p>
+
+                        </div>
+
+                        <strong class="price">
+                            $80
+                        </strong>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SECCIÓN DESTACADA
+        ================================================== -->
+
+        <section class="feature-section">
+
+            <div class="container feature-container">
+
+                <div class="feature-graphic">
+                    🌮
+                </div>
+
+                <div class="feature-content">
+
+                    <span class="section-label">
+                        EL SABOR DEL GÜERO
+                    </span>
+
+                    <h2>
+                        TACOS QUE
+                        <span>SE ANTOJAN</span>
+                    </h2>
+
+                    <p>
+                        Una buena taquiza siempre comienza
+                        con unos buenos tacos.
+                    </p>
+
+                    <a
+                        href="#menu"
+                        class="btn btn-dark">
+                        CONOCE EL MENÚ
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GALERÍA
+        ================================================== -->
+
+        <section id="galeria" class="gallery-section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        CONÓCENOS
+                    </span>
+
+                    <h2>
+                        GALERÍA
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="galeria-imagenes"
+                    class="gallery-grid">
+
+
+                    <div class="gallery-placeholder">
+                        <span>🌮</span>
+                        <p>
+                            Próximamente
+                        </p>
+                    </div>
+
+
+                    <div class="gallery-placeholder">
+                        <span>🔥</span>
+                        <p>
+                            Sabor de la casa
+                        </p>
+                    </div>
+
+
+                    <div class="gallery-placeholder">
+                        <span>🥩</span>
+                        <p>
+                            Ingredientes frescos
+                        </p>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             UBICACIÓN
+        ================================================== -->
+
+        <section
+            id="ubicacion"
+            class="location-section">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        ENCUÉNTRANOS
+                    </span>
+
+                    <h2>
+                        SUCURSAL REPÚBLICA
+                    </h2>
+
+                </div>
+
+
+                <div class="location-card">
+
+                    <div class="location-info">
+
+                        <div class="location-icon">
+                            📍
+                        </div>
+
+                        <h3>
+                            VISÍTANOS
+                        </h3>
+
+                        <p id="direccion">
+                            Sucursal República
+                        </p>
+
+                        <div class="location-details">
+
+                            <p>
+                                🕐
+                                <strong>
+                                    Horario
+                                </strong>
+                            </p>
+
+                            <p>
+                                Consulta nuestros horarios
+                                directamente en sucursal.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="#"
+                            id="maps-link"
+                            class="btn btn-dark"
+                            target="_blank"
+                            rel="noopener">
+
+                            CÓMO LLEGAR
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="map-container">
+
+                        <!--
+                            Aquí posteriormente podemos colocar
+                            Google Maps mediante el enlace de la
+                            sucursal.
+                        -->
+
+                        <div class="map-placeholder">
+
+                            <span>📍</span>
+
+                            <strong>
+                                TAQUERÍA EL GÜERO
+                            </strong>
+
+                            <small>
+                                SUCURSAL REPÚBLICA
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LLAMADO A WHATSAPP
+        ================================================== -->
+
+        <section class="cta-section">
+
+            <div class="container cta-container">
+
+                <div>
+
+                    <span class="section-label">
+                        ¿SE TE ANTOJARON?
+                    </span>
+
+                    <h2>
+                        ¡VAMOS POR UNOS TACOS!
+                    </h2>
+
+                    <p>
+                        Contáctanos directamente.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="#"
+                    id="whatsapp-button"
+                    class="whatsapp-button"
+                    target="_blank"
+                    rel="noopener">
+
+                    <span class="whatsapp-icon">
+                        ☎
+                    </span>
+
+                    <span>
+                        WHATSAPP
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="container footer-container">
+
+            <div class="footer-brand">
+
+                <h3>
+                    TAQUERÍA EL GÜERO
+                </h3>
+
+                <p>
+                    SUCURSAL REPÚBLICA
+                </p>
+
+            </div>
+
+
+            <div class="footer-social">
+
+                <!-- WHATSAPP -->
+
+                <a
+                    href="#"
+                    id="footer-whatsapp"
+                    class="social-button whatsapp"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="WhatsApp">
+
+                    WA
+
+                </a>
+
+
+                <!-- FACEBOOK -->
+
+                <a
+                    href="#"
+                    id="facebook-button"
+                    class="social-button facebook"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Facebook">
+
+                    f
+
+                </a>
+
+            </div>
+
+
+            <div class="footer-copy">
+
+                <p>
+                    © <span id="year"></span>
+                    Taquería El Güero.
+                    Todos los derechos reservados.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         BOTÓN FLOTANTE WHATSAPP
+    ====================================================== -->
+
+    <a
+        href="#"
+        id="floating-whatsapp"
+        class="floating-whatsapp"
+        target="_blank"
+        rel="noopener"
+        aria-label="Contactar por WhatsApp">
+
+        WA
+
+    </a>
+
+
+    <!-- =====================================================
+         CONFIGURACIÓN FUTURA
+    ====================================================== -->
+
+    <script>
+
+        /*
+         * ====================================================
+         * CONFIGURACIÓN TEMPORAL
+         * ====================================================
+         *
+         * Posteriormente estos datos vendrán desde
+         * Google Sheets mediante Apps Script.
+         *
+         * NO necesitamos modificar el HTML cuando eso ocurra.
+         * Solamente cambiaremos la información desde el panel.
+         */
+
+        const CONFIG = {
+
+            nombre:
+                "Taquería El Güero",
+
+            sucursal:
+                "Sucursal República",
+
+            whatsapp:
+                "",
+
+            facebook:
+                "",
+
+            maps:
+                "",
+
+            direccion:
+                "Sucursal República"
+
+        };
+
+
+        /*
+         * ====================================================
+         * AÑO DEL FOOTER
+         * ====================================================
+         */
+
+        document.getElementById("year")
+            .textContent =
+            new Date().getFullYear();
+
+
+        /*
+         * ====================================================
+         * WHATSAPP
+         * ====================================================
+         */
+
+        function configurarWhatsApp() {
+
+            if (!CONFIG.whatsapp) {
+                return;
+            }
+
+            const url =
+                "https://wa.me/" +
+                CONFIG.whatsapp;
+
+            const botones = [
+
+                "whatsapp-button",
+                "footer-whatsapp",
+                "floating-whatsapp"
+
+            ];
+
+            botones.forEach(id => {
+
+                const elemento =
+                    document.getElementById(id);
+
+                if (elemento) {
+                    elemento.href = url;
+                }
+
+            });
+
+        }
+
+
+        /*
+         * ====================================================
+         * FACEBOOK
+         * ====================================================
+         */
+
+        function configurarFacebook() {
+
+            if (!CONFIG.facebook) {
+                return;
+            }
+
+            const elemento =
+                document.getElementById(
+                    "facebook-button"
+                );
+
+            if (elemento) {
+                elemento.href =
+                    CONFIG.facebook;
+            }
+
+        }
+
+
+        /*
+         * ====================================================
+         * GOOGLE MAPS
+         * ====================================================
+         */
+
+        function configurarMaps() {
+
+            if (!CONFIG.maps) {
+                return;
+            }
+
+            const elemento =
+                document.getElementById(
+                    "maps-link"
+                );
+
+            if (elemento) {
+                elemento.href =
+                    CONFIG.maps;
+            }
+
+        }
+
+
+        /*
+         * ====================================================
+         * DIRECCIÓN
+         * ====================================================
+         */
+
+        function configurarDireccion() {
+
+            const elemento =
+                document.getElementById(
+                    "direccion"
+                );
+
+            if (elemento) {
+
+                elemento.textContent =
+                    CONFIG.direccion;
+
+            }
+
+        }
+
+
+        /*
+         * ====================================================
+         * INICIALIZACIÓN
+         * ====================================================
+         */
+
+        configurarWhatsApp();
+        configurarFacebook();
+        configurarMaps();
+        configurarDireccion();
+
+    </script>
+
+</body>
+
+</html>
