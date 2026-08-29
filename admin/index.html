@@ -162,6 +162,7 @@
 
 
         .field input,
+        .field select,
         .field textarea {
 
             width: 100%;
@@ -267,6 +268,39 @@
                 );
 
             gap: 18px;
+
+        }
+
+
+        .seccion-productos-grupo {
+
+            margin-bottom: 30px;
+
+            padding-bottom: 25px;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+
+        .seccion-productos-grupo:last-child {
+
+            border-bottom: none;
+
+            margin-bottom: 0;
+
+            padding-bottom: 0;
+
+        }
+
+
+        .seccion-productos-titulo {
+
+            font-size: 17px;
+
+            margin-bottom: 14px;
+
+            color: #c84b08;
 
         }
 
@@ -756,10 +790,9 @@
                     Sección
                 </label>
 
-                <input
-                    id="producto-seccion"
-                    type="text"
-                    placeholder="tacos">
+                <select
+                    id="producto-seccion">
+                </select>
 
             </div>
 
@@ -1230,6 +1263,209 @@ function cargarConfiguracion(
    MOSTRAR PRODUCTOS
 ===================================================== */
 
+function crearTarjetaProducto(
+    producto
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        "product";
+
+
+    div.innerHTML = `
+
+        <h3>
+            ${escaparHTML(
+                producto.nombre
+            )}
+        </h3>
+
+        <div class="product-description">
+            ${escaparHTML(
+                producto.descripcion || ""
+            )}
+        </div>
+
+        <div class="product-price">
+            $${producto.precio}
+        </div>
+
+        <div class="product-status">
+
+            Estado:
+
+            <span class="${
+                producto.activo
+                ? "activo"
+                : "inactivo"
+            }">
+
+                ${
+                    producto.activo
+                    ? "Activo"
+                    : "Inactivo"
+                }
+
+            </span>
+
+        </div>
+
+        <div class="actions">
+
+            <button
+                class="btn-primary"
+                onclick="editarProducto(${producto.id})">
+
+                ✏️ Editar
+
+            </button>
+
+            <button
+                class="btn-danger"
+                onclick="desactivarProducto(${producto.id})">
+
+                🗑️ Desactivar
+
+            </button>
+
+        </div>
+
+    `;
+
+
+    return div;
+
+}
+
+
+function crearGrupoSeccion(
+    nombreSeccion,
+    tituloMostrado,
+    productosDeSeccion
+) {
+
+    const grupo =
+        document.createElement(
+            "div"
+        );
+
+    grupo.className =
+        "seccion-productos-grupo";
+
+
+    const encabezado =
+        document.createElement(
+            "h3"
+        );
+
+    encabezado.className =
+        "seccion-productos-titulo";
+
+    encabezado.textContent =
+        "🧩 " + tituloMostrado;
+
+    grupo.appendChild(
+        encabezado
+    );
+
+
+    const grid =
+        document.createElement(
+            "div"
+        );
+
+    grid.className =
+        "products";
+
+
+    if (
+        productosDeSeccion.length === 0
+    ) {
+
+        const vacio =
+            document.createElement(
+                "p"
+            );
+
+        vacio.textContent =
+            "Sin productos en esta sección.";
+
+        grid.appendChild(
+            vacio
+        );
+
+    }
+    else {
+
+        productosDeSeccion.forEach(
+            producto => {
+
+                grid.appendChild(
+                    crearTarjetaProducto(
+                        producto
+                    )
+                );
+
+            }
+        );
+
+    }
+
+    grupo.appendChild(
+        grid
+    );
+
+
+    const acciones =
+        document.createElement(
+            "div"
+        );
+
+    acciones.className =
+        "actions";
+
+
+    const boton =
+        document.createElement(
+            "button"
+        );
+
+    boton.className =
+        "btn-primary";
+
+    boton.textContent =
+        "➕ Agregar producto";
+
+    boton.onclick =
+        function() {
+            nuevoProducto(
+                nombreSeccion
+            );
+        };
+
+    acciones.appendChild(
+        boton
+    );
+
+    grupo.appendChild(
+        acciones
+    );
+
+
+    return grupo;
+
+}
+
+
+/* =====================================================
+   MOSTRAR PRODUCTOS (AGRUPADOS POR SECCIÓN)
+===================================================== */
+
 function mostrarProductos(
     productos
 ) {
@@ -1243,9 +1479,23 @@ function mostrarProductos(
     contenedor.innerHTML = "";
 
 
+    const listaProductos =
+        productos || [];
+
+    const secciones =
+        (datosActuales.secciones || [])
+            .slice()
+            .sort(function(a, b) {
+                return (
+                    (a.orden || 0) -
+                    (b.orden || 0)
+                );
+            });
+
+
     if (
-        !productos ||
-        productos.length === 0
+        secciones.length === 0 &&
+        listaProductos.length === 0
     ) {
 
         contenedor.innerHTML =
@@ -1256,86 +1506,54 @@ function mostrarProductos(
     }
 
 
-    productos.forEach(
-        producto => {
+    secciones.forEach(
+        seccion => {
 
-            const div =
-                document.createElement(
-                    "div"
+            const productosDeSeccion =
+                listaProductos.filter(
+                    p =>
+                        (p.seccion || "") ===
+                        seccion.nombre
                 );
 
-
-            div.className =
-                "product";
-
-
-            div.innerHTML = `
-
-                <h3>
-                    ${escaparHTML(
-                        producto.nombre
-                    )}
-                </h3>
-
-                <div class="product-description">
-                    ${escaparHTML(
-                        producto.descripcion || ""
-                    )}
-                </div>
-
-                <div class="product-price">
-                    $${producto.precio}
-                </div>
-
-                <div class="product-status">
-
-                    Estado:
-
-                    <span class="${
-                        producto.activo
-                        ? "activo"
-                        : "inactivo"
-                    }">
-
-                        ${
-                            producto.activo
-                            ? "Activo"
-                            : "Inactivo"
-                        }
-
-                    </span>
-
-                </div>
-
-                <div class="actions">
-
-                    <button
-                        class="btn-primary"
-                        onclick="editarProducto(${producto.id})">
-
-                        ✏️ Editar
-
-                    </button>
-
-                    <button
-                        class="btn-danger"
-                        onclick="desactivarProducto(${producto.id})">
-
-                        🗑️ Desactivar
-
-                    </button>
-
-                </div>
-
-            `;
-
-
             contenedor.appendChild(
-                div
+                crearGrupoSeccion(
+                    seccion.nombre,
+                    seccion.nombre,
+                    productosDeSeccion
+                )
             );
 
         }
     );
+
+
+    const nombresSecciones =
+        secciones.map(
+            s => s.nombre
+        );
+
+    const productosSinSeccion =
+        listaProductos.filter(
+            p =>
+                !nombresSecciones.includes(
+                    p.seccion || ""
+                )
+        );
+
+    if (
+        productosSinSeccion.length > 0
+    ) {
+
+        contenedor.appendChild(
+            crearGrupoSeccion(
+                "",
+                "Sin sección",
+                productosSinSeccion
+            )
+        );
+
+    }
 
 }
 
@@ -1423,6 +1641,58 @@ function mostrarSecciones(
    EDITAR PRODUCTO
 ===================================================== */
 
+/* =====================================================
+   SELECT DE SECCIONES (PRODUCTO)
+===================================================== */
+
+function poblarSelectSeccionesProducto(
+    valorSeleccionado
+) {
+
+    const select =
+        document.getElementById(
+            "producto-seccion"
+        );
+
+    select.innerHTML = "";
+
+    const secciones =
+        (datosActuales.secciones || [])
+            .slice()
+            .sort(function(a, b) {
+                return (
+                    (a.orden || 0) -
+                    (b.orden || 0)
+                );
+            });
+
+    secciones.forEach(function(seccion) {
+
+        const opcion =
+            document.createElement(
+                "option"
+            );
+
+        opcion.value =
+            seccion.nombre;
+
+        opcion.textContent =
+            seccion.nombre;
+
+        select.appendChild(
+            opcion
+        );
+
+    });
+
+    if (valorSeleccionado) {
+        select.value =
+            valorSeleccionado;
+    }
+
+}
+
+
 function editarProducto(
     id
 ) {
@@ -1446,10 +1716,9 @@ function editarProducto(
         producto.id;
 
 
-    document.getElementById(
-        "producto-seccion"
-    ).value =
-        producto.seccion || "";
+    poblarSelectSeccionesProducto(
+        producto.seccion || ""
+    );
 
 
     document.getElementById(
@@ -1501,16 +1770,18 @@ function editarProducto(
    NUEVO PRODUCTO
 ===================================================== */
 
-function nuevoProducto() {
+function nuevoProducto(
+    seccionPreseleccionada
+) {
 
     document.getElementById(
         "producto-id"
     ).value = "";
 
 
-    document.getElementById(
-        "producto-seccion"
-    ).value = "tacos";
+    poblarSelectSeccionesProducto(
+        seccionPreseleccionada || ""
+    );
 
 
     document.getElementById(
