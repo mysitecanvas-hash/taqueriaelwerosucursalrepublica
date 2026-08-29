@@ -1826,9 +1826,7 @@ async function desactivarProducto(
    POST
 ===================================================== */
 
-async function enviarPOST(
-    datos
-) {
+async function enviarPOST(datos) {
 
     mostrarEstado(
         "Guardando..."
@@ -1837,27 +1835,93 @@ async function enviarPOST(
 
     try {
 
-        const respuesta =
-            await fetch(
-                API_URL,
-                {
+        const parametros =
+            new URLSearchParams();
 
-                    method: "POST",
 
-                    headers: {
+        /*
+         * Acción
+         */
 
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
+        parametros.append(
+            "accion",
+            datos.accion
+        );
 
-                    },
 
-                    body:
-                        JSON.stringify(
-                            datos
-                        )
+        /*
+         * Datos del objeto
+         */
+
+        if (datos.data) {
+
+            Object.keys(
+                datos.data
+            ).forEach(
+                function(campo) {
+
+                    let valor =
+                        datos.data[campo];
+
+
+                    if (
+                        valor === null ||
+                        valor === undefined
+                    ) {
+
+                        valor = "";
+
+                    }
+
+
+                    parametros.append(
+                        campo,
+                        valor
+                    );
 
                 }
             );
+
+        }
+
+
+        /*
+         * ID
+         */
+
+        if (
+            datos.id !== undefined &&
+            datos.id !== null
+        ) {
+
+            parametros.append(
+                "id",
+                datos.id
+            );
+
+        }
+
+
+        /*
+         * Enviar como GET
+         */
+
+        const respuesta =
+            await fetch(
+                API_URL +
+                "?" +
+                parametros.toString()
+            );
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "Error HTTP " +
+                respuesta.status
+            );
+
+        }
 
 
         const resultado =
@@ -1867,7 +1931,8 @@ async function enviarPOST(
         if (!resultado.ok) {
 
             throw new Error(
-                resultado.error
+                resultado.error ||
+                "No se pudo guardar."
             );
 
         }
@@ -1886,6 +1951,7 @@ async function enviarPOST(
     catch (error) {
 
         console.error(
+            "Error al guardar:",
             error
         );
 
@@ -1900,10 +1966,12 @@ async function enviarPOST(
             error.message
         );
 
+
+        return null;
+
     }
 
 }
-
 
 /* =====================================================
    MODALES
