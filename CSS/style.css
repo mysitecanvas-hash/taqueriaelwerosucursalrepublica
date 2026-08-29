@@ -616,7 +616,7 @@ a {
 
 
 /* =========================================================
-   MENÚ
+ MENÚ
 ========================================================= */
 
 .menu-section {
@@ -628,33 +628,57 @@ a {
         var(--amarillo);
 }
 
+
+/* =========================================================
+   CONTENEDOR DEL MENÚ
+   Una sola columna para tarjetas anchas
+========================================================= */
+
 .menu-grid {
 
     display: grid;
 
     grid-template-columns:
-        repeat(
-            2,
-            minmax(
-                0,
-                1fr
-            )
-        );
+        1fr;
 
-    gap: 22px;
+    gap:
+        22px;
+
+    width:
+        100%;
+
 }
+
+
+/* =========================================================
+   TARJETA DE PRODUCTO
+========================================================= */
 
 .menu-item {
 
-    position: relative;
+    position:
+        relative;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    gap: 25px;
+    gap:
+        25px;
+
+    width:
+        100%;
+
+    min-width:
+        0;
+
+    box-sizing:
+        border-box;
 
     padding:
         25px;
@@ -676,30 +700,115 @@ a {
     transition:
         transform .2s ease,
         box-shadow .2s ease;
+
 }
 
-.menu-item:hover {
 
-    transform:
-        translate(
-            -3px,
-            -3px
-        );
+/* =========================================================
+   PRODUCTO CON IMAGEN
+========================================================= */
 
-    box-shadow:
-        9px 9px 0
+.menu-item.tiene-imagen {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        360px
+        minmax(0, 1fr)
+        auto;
+
+    align-items:
+        center;
+
+    gap:
+        30px;
+
+    width:
+        100%;
+
+    min-width:
+        0;
+
+}
+
+
+/* =========================================================
+   IMAGEN DEL PRODUCTO
+   Tamaño FIJO
+========================================================= */
+
+.menu-item.tiene-imagen > img {
+
+    width:
+        360px;
+
+    height:
+        190px;
+
+    min-width:
+        360px;
+
+    max-width:
+        360px;
+
+    min-height:
+        190px;
+
+    max-height:
+        190px;
+
+    display:
+        block;
+
+    box-sizing:
+        border-box;
+
+    object-fit:
+        cover;
+
+    object-position:
+        center;
+
+    overflow:
+        hidden;
+
+    border:
+        3px solid
         var(--negro);
+
+    border-radius:
+        16px;
+
 }
+
+
+/* =========================================================
+   INFORMACIÓN DEL PRODUCTO
+========================================================= */
 
 .menu-item-info {
 
-    min-width: 0;
+    min-width:
+        0;
+
+    width:
+        100%;
+
+    overflow:
+        hidden;
+
 }
+
+
+/* =========================================================
+   NOMBRE DEL PRODUCTO
+========================================================= */
 
 .menu-item h3 {
 
     margin:
-        0 0 7px;
+        0 0 10px;
 
     font-size:
         clamp(
@@ -708,17 +817,35 @@ a {
             1.7rem
         );
 
-    line-height: 1;
+    line-height:
+        1.05;
 
-    font-weight: 950;
+    font-weight:
+        950;
 
     text-transform:
         uppercase;
+
+    white-space:
+        normal;
+
+    overflow-wrap:
+        normal;
+
+    word-break:
+        normal;
+
 }
+
+
+/* =========================================================
+   DESCRIPCIÓN
+========================================================= */
 
 .menu-item p {
 
-    margin: 0;
+    margin:
+        0;
 
     color:
         var(--gris);
@@ -726,12 +853,26 @@ a {
     font-size:
         .95rem;
 
-    font-weight: 600;
+    font-weight:
+        600;
+
+    line-height:
+        1.4;
+
 }
+
+
+/* =========================================================
+   PRECIO
+========================================================= */
 
 .price {
 
-    flex-shrink: 0;
+    flex-shrink:
+        0;
+
+    white-space:
+        nowrap;
 
     padding:
         8px 13px;
@@ -751,20 +892,255 @@ a {
 
     font-weight:
         950;
+
 }
+
+
+/* =========================================================
+   EFECTO HOVER
+========================================================= */
+
+.menu-item:hover {
+
+    transform:
+        translate(
+            -3px,
+            -3px
+        );
+
+    box-shadow:
+        9px 9px 0
+        var(--negro);
+
+}
+
+
+/* =========================================================
+   PRODUCTO DESTACADO
+========================================================= */
 
 .menu-item-featured {
 
     background:
         var(--naranja);
+
 }
+
 
 .menu-item-featured .price {
 
     background:
         var(--amarillo);
+
 }
 
+
+/* =========================================================
+   SEGURIDAD CONTRA IMÁGENES GRANDES
+========================================================= */
+
+/*
+ * Ninguna imagen puede modificar el tamaño
+ * de la tarjeta.
+ */
+
+.menu-item img {
+
+    max-width:
+        none;
+
+    object-fit:
+        cover;
+
+}
+
+
+/*
+ * El contenido textual tampoco puede
+ * empujar la tarjeta fuera de su espacio.
+ */
+
+.menu-item-info,
+.menu-item h3,
+.menu-item p {
+
+    overflow-wrap:
+        break-word;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .menu-item.tiene-imagen {
+
+        grid-template-columns:
+            280px
+            minmax(0, 1fr)
+            auto;
+
+        gap:
+            22px;
+
+    }
+
+
+    .menu-item.tiene-imagen > img {
+
+        width:
+            280px;
+
+        height:
+            170px;
+
+        min-width:
+            280px;
+
+        max-width:
+            280px;
+
+        min-height:
+            170px;
+
+        max-height:
+            170px;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .menu-item {
+
+        padding:
+            18px;
+
+    }
+
+
+    .menu-item.tiene-imagen {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            auto;
+
+        gap:
+            16px;
+
+    }
+
+
+    .menu-item.tiene-imagen > img {
+
+        grid-column:
+            1 / -1;
+
+        width:
+            100%;
+
+        height:
+            220px;
+
+        min-width:
+            0;
+
+        max-width:
+            none;
+
+        min-height:
+            220px;
+
+        max-height:
+            220px;
+
+        object-fit:
+            cover;
+
+    }
+
+
+    .menu-item.tiene-imagen .menu-item-info {
+
+        grid-column:
+            1;
+
+    }
+
+
+    .menu-item.tiene-imagen .price {
+
+        grid-column:
+            2;
+
+        align-self:
+            start;
+
+        justify-self:
+            end;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES PEQUEÑOS
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .menu-item.tiene-imagen {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .menu-item.tiene-imagen > img {
+
+        height:
+            200px;
+
+        min-height:
+            200px;
+
+        max-height:
+            200px;
+
+    }
+
+
+    .menu-item.tiene-imagen .menu-item-info,
+    .menu-item.tiene-imagen .price {
+
+        grid-column:
+            1;
+
+    }
+
+
+    .menu-item.tiene-imagen .price {
+
+        justify-self:
+            start;
+
+    }
+
+}
 
 /* =========================================================
    FEATURE
