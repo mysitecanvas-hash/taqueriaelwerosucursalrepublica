@@ -1054,7 +1054,8 @@ async function cargarTodo() {
         const respuesta =
             await fetch(
                 API_URL +
-                "?accion=todo"
+                "?accion=todo&_=" +
+                Date.now()
             );
 
 
@@ -1062,31 +1063,85 @@ async function cargarTodo() {
             await respuesta.json();
 
 
+        console.log(
+            "Respuesta completa de API:",
+            datos
+        );
+
+
         if (!datos.ok) {
 
             throw new Error(
-                datos.error
+                datos.error ||
+                "La API devolvió un error."
             );
 
         }
 
 
-        datosActuales =
-            datos;
+        /*
+         * =================================================
+         * LA API DEVUELVE LOS DATOS DENTRO DE "data"
+         * =================================================
+         */
 
+        const contenido =
+            datos.data || datos;
+
+
+        if (!contenido) {
+
+            throw new Error(
+                "La API no devolvió información."
+            );
+
+        }
+
+
+        datosActuales = {
+
+            config:
+                contenido.config || {},
+
+            productos:
+                contenido.productos || [],
+
+            secciones:
+                contenido.secciones || []
+
+        };
+
+
+        /*
+         * =================================================
+         * CONFIGURACIÓN
+         * =================================================
+         */
 
         cargarConfiguracion(
-            datos.config
+            datosActuales.config
         );
 
+
+        /*
+         * =================================================
+         * PRODUCTOS
+         * =================================================
+         */
 
         mostrarProductos(
-            datos.productos
+            datosActuales.productos
         );
 
 
+        /*
+         * =================================================
+         * SECCIONES
+         * =================================================
+         */
+
         mostrarSecciones(
-            datos.secciones
+            datosActuales.secciones
         );
 
 
@@ -1099,16 +1154,25 @@ async function cargarTodo() {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Error cargando panel:",
+            error
+        );
+
 
         mostrarEstado(
             "Error al cargar información"
         );
 
+
+        alert(
+            "No se pudo cargar el panel: " +
+            error.message
+        );
+
     }
 
 }
-
 
 /* =====================================================
    CONFIGURACIÓN
