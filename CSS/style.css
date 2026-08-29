@@ -284,12 +284,12 @@ a {
             7.5rem
         );
 
-    line-height: .82;
+    line-height: 1.05;
 
     font-weight: 950;
 
     letter-spacing:
-        -.06em;
+        -.02em;
 
     text-transform:
         uppercase;
