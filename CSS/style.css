@@ -556,17 +556,20 @@ a {
         #eee;
 }
 
-.intro-decoration {
+.image-placeholder small {
 
-    font-size:
-        11rem;
-
-    text-align: center;
-
-    transform:
-        rotate(-10deg);
+   font-size: .9rem;
+    font-weight: 900;
+    letter-spacing: .2em;
 }
 
+.hero-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
 
 /* =========================================================
    SECCIONES
