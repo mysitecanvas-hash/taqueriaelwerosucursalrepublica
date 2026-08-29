@@ -1886,3 +1886,210 @@ footer {
     }
 
 }
+
+
+/* =========================================================
+   PRODUCTOS CON IMAGEN
+   Ajuste fijo y responsive
+   ========================================================= */
+
+/*
+ * Las imágenes de productos nunca determinan el tamaño
+ * de la tarjeta. El contenedor tiene dimensiones controladas
+ * y la imagen se recorta/ajusta mediante object-fit: cover.
+ */
+
+.menu-item.tiene-imagen {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 22px;
+    min-width: 0;
+}
+
+/* Contenedor de imagen, por si app.js lo utiliza */
+.menu-item-image {
+    width: 220px;
+    height: 220px;
+    min-width: 220px;
+    min-height: 220px;
+    max-width: 220px;
+    max-height: 220px;
+    overflow: hidden;
+    border: 3px solid var(--negro);
+    border-radius: 16px;
+    background: #eee;
+}
+
+/* Imagen real */
+.menu-item.tiene-imagen img,
+.menu-item-image img {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    max-width: none;
+    max-height: none;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+/*
+ * Si la imagen se inserta directamente dentro de
+ * .menu-item sin contenedor.
+ */
+.menu-item.tiene-imagen > img {
+    width: 220px;
+    height: 220px;
+    min-width: 220px;
+    min-height: 220px;
+    max-width: 220px;
+    max-height: 220px;
+    flex: 0 0 220px;
+    object-fit: cover;
+    object-position: center;
+    overflow: hidden;
+    border: 3px solid var(--negro);
+    border-radius: 16px;
+}
+
+/* Información: nunca debe provocar desbordamiento */
+.menu-item.tiene-imagen .menu-item-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Título y descripción pueden ocupar todo el espacio disponible */
+.menu-item.tiene-imagen .menu-item-info h3,
+.menu-item.tiene-imagen .menu-item-info p {
+    max-width: 100%;
+}
+
+/* El precio conserva su tamaño y nunca se aplasta */
+.menu-item.tiene-imagen .price {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* ---------------------------------------------------------
+   TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .menu-item.tiene-imagen {
+        grid-template-columns: 180px minmax(0, 1fr) auto;
+        gap: 18px;
+    }
+
+    .menu-item-image,
+    .menu-item.tiene-imagen > img {
+        width: 180px;
+        height: 180px;
+        min-width: 180px;
+        min-height: 180px;
+        max-width: 180px;
+        max-height: 180px;
+    }
+
+}
+
+/* ---------------------------------------------------------
+   CELULAR
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .menu-item.tiene-imagen {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        gap: 15px;
+        padding: 16px;
+    }
+
+    .menu-item.tiene-imagen .menu-item-image,
+    .menu-item.tiene-imagen > img {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 220px;
+        min-width: 0;
+        min-height: 220px;
+        max-width: none;
+        max-height: 220px;
+        object-fit: cover;
+        border-radius: 16px;
+    }
+
+    .menu-item.tiene-imagen .menu-item-info {
+        grid-column: 1;
+        min-width: 0;
+    }
+
+    .menu-item.tiene-imagen .price {
+        grid-column: 2;
+        align-self: start;
+        justify-self: end;
+    }
+
+}
+
+/* ---------------------------------------------------------
+   CELULARES MUY PEQUEÑOS
+   --------------------------------------------------------- */
+
+@media (max-width: 420px) {
+
+    .menu-item.tiene-imagen {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-item.tiene-imagen .menu-item-image,
+    .menu-item.tiene-imagen > img {
+        height: 200px;
+        min-height: 200px;
+        max-height: 200px;
+    }
+
+    .menu-item.tiene-imagen .menu-item-info,
+    .menu-item.tiene-imagen .price {
+        grid-column: 1;
+    }
+
+    .menu-item.tiene-imagen .price {
+        justify-self: start;
+    }
+
+}
+
+/* =========================================================
+   SEGURIDAD DE IMÁGENES
+   ========================================================= */
+
+/*
+ * Evita que cualquier imagen externa, enorme o con una
+ * proporción extraña cambie el tamaño del diseño.
+ */
+.menu-item img {
+    box-sizing: border-box;
+    object-fit: cover;
+}
+
+/*
+ * Si una imagen falla, el espacio reservado se conserva
+ * y la tarjeta no cambia de tamaño inesperadamente.
+ */
+.menu-item-image,
+.menu-item.tiene-imagen > img {
+    aspect-ratio: 1 / 1;
+}
+
+/*
+ * Evita textos/URLs largas que rompan la tarjeta.
+ */
+.menu-item,
+.menu-item-info {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
