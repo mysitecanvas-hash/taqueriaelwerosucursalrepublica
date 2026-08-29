@@ -418,16 +418,6 @@ a {
 
     justify-content: center;
 
-    /*background:
-        var(--naranja);
-
-    border:
-        7px solid
-        var(--negro);*/
-
-    box-shadow:
-        var(--sombra);
-
     text-align: center;
 
     transform:
