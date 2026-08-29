@@ -69,13 +69,7 @@
                     <a href="#menu" class="btn btn-dark">
                         VER MENÚ
                     </a>
-
-                    <a
-                        href="#ubicacion"
-                        class="btn btn-light">
-                        VISÍTANOS
-                    </a>
-
+                   
                 </div>
 
             </div>
@@ -165,162 +159,22 @@
                     <h2>NUESTRO MENÚ</h2>
                 </div>
                 <!--
-                    IMPORTANTE: Estos productos están escritos directamente por ahora. Posteriormente app.js podrá obtenerlos desde
-                    Google Sheets sin modificar este HTML.
+                    IMPORTANTE:
+
+                    Los productos se cargan dinámicamente desde
+                    el panel admin (Google Sheets) a través de
+                    app.js. Este contenedor empieza vacío con un
+                    mensaje de carga para no mostrar nunca datos
+                    viejos o inventados antes de que llegue la
+                    información real.
                 -->
                 <div
                     id="productos"
                     class="menu-grid">
 
-
-                    <!-- PASTOR -->
-
-                    <article
-                        class="menu-item"
-                        data-product-id="pastor">
-
-                        <div class="menu-item-info">
-
-                            <h3>
-                                TACOS DE PASTOR
-                            </h3>
-
-                            <p>
-                                El clásico que nunca falla.
-                            </p>
-
-                        </div>
-
-                        <strong class="price">
-                            $16
-                        </strong>
-
-                    </article>
-
-
-                    <!-- SUADERO -->
-
-                    <article
-                        class="menu-item"
-                        data-product-id="suadero">
-
-                        <div class="menu-item-info">
-
-                            <h3>
-                                TACOS DE SUADERO
-                            </h3>
-
-                            <p>
-                                Suavecitos y llenos de sabor.
-                            </p>
-
-                        </div>
-
-                        <strong class="price">
-                            $16
-                        </strong>
-
-                    </article>
-
-
-                    <!-- LONGANIZA -->
-
-                    <article
-                        class="menu-item"
-                        data-product-id="longaniza">
-
-                        <div class="menu-item-info">
-
-                            <h3>
-                                TACOS DE LONGANIZA
-                            </h3>
-
-                            <p>
-                                Con todo el sabor de la casa.
-                            </p>
-
-                        </div>
-
-                        <strong class="price">
-                            $16
-                        </strong>
-
-                    </article>
-
-
-                    <!-- CAMPECHANOS -->
-
-                    <article
-                        class="menu-item"
-                        data-product-id="campechanos">
-
-                        <div class="menu-item-info">
-
-                            <h3>
-                                TACOS CAMPECHANOS
-                            </h3>
-
-                            <p>
-                                La combinación perfecta.
-                            </p>
-
-                        </div>
-
-                        <strong class="price">
-                            $16
-                        </strong>
-
-                    </article>
-
-
-                    <!-- CABEZA -->
-
-                    <article
-                        class="menu-item"
-                        data-product-id="cabeza">
-
-                        <div class="menu-item-info">
-
-                            <h3>
-                                TACOS DE CABEZA
-                            </h3>
-
-                            <p>
-                                Una opción tradicional.
-                            </p>
-
-                        </div>
-
-                        <strong class="price">
-                            $16
-                        </strong>
-
-                    </article>
-
-
-                    <!-- ORDEN -->
-
-                    <article
-                        class="menu-item menu-item-featured"
-                        data-product-id="orden">
-
-                        <div class="menu-item-info">
-
-                            <h3>
-                                ORDEN
-                            </h3>
-
-                            <p>
-                                Para disfrutar todavía más.
-                            </p>
-
-                        </div>
-
-                        <strong class="price">
-                            $80
-                        </strong>
-
-                    </article>
+                    <p class="menu-loading">
+                        Cargando menú...
+                    </p>
 
                 </div>
 
