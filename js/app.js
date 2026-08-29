@@ -1,7 +1,7 @@
 /* =========================================================
    TAQUERÍA EL GÜERO
    APP.JS
-   Conexión con Google Sheets mediante Apps Script
+   Página pública
    ========================================================= */
 
 
@@ -28,14 +28,17 @@ async function cargarSitio() {
 
         const respuesta =
             await fetch(
-                API_URL + "?accion=todo"
+                API_URL +
+                "?accion=todo&_=" +
+                Date.now()
             );
 
 
         if (!respuesta.ok) {
 
             throw new Error(
-                "No se pudo conectar con la API."
+                "No se pudo conectar con la API. HTTP " +
+                respuesta.status
             );
 
         }
@@ -55,37 +58,88 @@ async function cargarSitio() {
 
             throw new Error(
                 datos.error ||
-                "Error desconocido."
+                "La API devolvió un error."
             );
 
         }
 
 
         /*
-         * Aplicar configuración
+         * =================================================
+         * OBTENER INFORMACIÓN
+         *
+         * Aceptamos tanto:
+         *
+         * datos.config
+         *
+         * como:
+         *
+         * datos.data.config
+         *
+         * Esto hace el sistema más resistente.
+         * =================================================
          */
 
-        aplicarConfiguracion(
-            datos.config
+        const contenido =
+            datos.data || datos;
+
+
+        const config =
+            contenido.config ||
+            datos.config ||
+            {};
+
+
+        const productos =
+            contenido.productos ||
+            datos.productos ||
+            [];
+
+
+        const secciones =
+            contenido.secciones ||
+            datos.secciones ||
+            [];
+
+
+        console.log(
+            "Configuración:",
+            config
         );
 
 
-        /*
-         * Mostrar productos
-         */
-
-        mostrarProductos(
-            datos.productos
+        console.log(
+            "Productos:",
+            productos
         );
 
-
-        /*
-         * Mostrar secciones
-         */
 
         console.log(
             "Secciones:",
-            datos.secciones
+            secciones
+        );
+
+
+        /*
+         * =================================================
+         * APLICAR CONFIGURACIÓN
+         * =================================================
+         */
+
+        aplicarConfiguracion(
+            config
+        );
+
+
+        /*
+         * =================================================
+         * MOSTRAR PRODUCTOS
+         * =================================================
+         */
+
+        mostrarProductos(
+            productos,
+            secciones
         );
 
 
@@ -99,8 +153,12 @@ async function cargarSitio() {
     catch (error) {
 
         console.error(
-            "Error:",
+            "Error cargando el sitio:",
             error
+        );
+
+        mostrarError(
+            error.message
         );
 
     }
@@ -117,29 +175,36 @@ function aplicarConfiguracion(
 ) {
 
     if (!config) {
+
         return;
+
     }
 
 
     /*
-     * Título del navegador
+     * =================================================
+     * TÍTULO
+     * =================================================
      */
 
     if (config.nombre) {
 
         document.title =
             config.nombre +
-            " | " +
             (
-                config.sucursal ||
-                ""
+                config.sucursal
+                    ? " | " +
+                      config.sucursal
+                    : ""
             );
 
     }
 
 
     /*
-     * Nombre del negocio
+     * =================================================
+     * NOMBRE DEL NEGOCIO
+     * =================================================
      */
 
     const nombre =
@@ -147,7 +212,11 @@ function aplicarConfiguracion(
             ".nav-logo"
         );
 
-    if (nombre && config.nombre) {
+
+    if (
+        nombre &&
+        config.nombre
+    ) {
 
         nombre.textContent =
             config.nombre;
@@ -156,13 +225,16 @@ function aplicarConfiguracion(
 
 
     /*
-     * Sucursal
+     * =================================================
+     * SUCURSAL
+     * =================================================
      */
 
     const sucursal =
         document.querySelector(
             ".hero-badge"
         );
+
 
     if (
         sucursal &&
@@ -176,13 +248,16 @@ function aplicarConfiguracion(
 
 
     /*
-     * Dirección
+     * =================================================
+     * DIRECCIÓN
+     * =================================================
      */
 
     const direccion =
         document.getElementById(
             "direccion"
         );
+
 
     if (
         direccion &&
@@ -196,7 +271,9 @@ function aplicarConfiguracion(
 
 
     /*
-     * WhatsApp
+     * =================================================
+     * WHATSAPP
+     * =================================================
      */
 
     if (config.whatsapp) {
@@ -242,7 +319,9 @@ function aplicarConfiguracion(
 
 
     /*
-     * Facebook
+     * =================================================
+     * FACEBOOK
+     * =================================================
      */
 
     if (config.facebook) {
@@ -264,7 +343,9 @@ function aplicarConfiguracion(
 
 
     /*
-     * Google Maps
+     * =================================================
+     * GOOGLE MAPS
+     * =================================================
      */
 
     if (config.maps) {
@@ -292,7 +373,8 @@ function aplicarConfiguracion(
 ========================================================= */
 
 function mostrarProductos(
-    productos
+    productos,
+    secciones
 ) {
 
     const contenedor =
@@ -304,7 +386,7 @@ function mostrarProductos(
     if (!contenedor) {
 
         console.warn(
-            "No existe #productos"
+            "No existe el elemento #productos."
         );
 
         return;
@@ -313,19 +395,35 @@ function mostrarProductos(
 
 
     /*
-     * Limpiar productos actuales
+     * Limpiar
      */
 
     contenedor.innerHTML = "";
 
 
     /*
-     * Si no existen productos
+     * Productos activos
+     */
+
+    const productosActivos =
+        (productos || [])
+            .filter(
+                function(producto) {
+
+                    return (
+                        producto.activo === true
+                    );
+
+                }
+            );
+
+
+    /*
+     * Sin productos
      */
 
     if (
-        !productos ||
-        productos.length === 0
+        productosActivos.length === 0
     ) {
 
         contenedor.innerHTML = `
@@ -343,162 +441,459 @@ function mostrarProductos(
 
 
     /*
-     * Recorrer productos
+     * =================================================
+     * SI EXISTEN SECCIONES
+     * =================================================
      */
 
-    productos.forEach(
-        function(producto) {
+    if (
+        secciones &&
+        secciones.length > 0
+    ) {
 
+        const seccionesActivas =
+            secciones
+                .filter(
+                    function(seccion) {
 
-            /*
-             * Productos desactivados
-             */
+                        return (
+                            seccion.activo === true
+                        );
 
-            if (
-                producto.activo !== true
-            ) {
+                    }
+                )
+                .sort(
+                    function(a, b) {
 
-                return;
+                        return (
+                            Number(a.orden || 0) -
+                            Number(b.orden || 0)
+                        );
 
-            }
-
-
-            /*
-             * Crear tarjeta
-             */
-
-            const tarjeta =
-                document.createElement(
-                    "article"
+                    }
                 );
 
 
-            tarjeta.className =
-                "menu-item";
+        seccionesActivas.forEach(
+            function(seccion) {
+
+                const productosSeccion =
+                    productosActivos
+                        .filter(
+                            function(producto) {
+
+                                return (
+                                    String(
+                                        producto.seccion
+                                    ) ===
+                                    String(
+                                        seccion.id
+                                    ) ||
+                                    String(
+                                        producto.seccion
+                                    ) ===
+                                    String(
+                                        seccion.nombre
+                                    )
+                                );
+
+                            }
+                        );
 
 
-            tarjeta.dataset.productId =
-                producto.id;
+                if (
+                    productosSeccion.length === 0
+                ) {
+
+                    return;
+
+                }
 
 
-            /*
-             * Información
-             */
+                const bloque =
+                    document.createElement(
+                        "section"
+                    );
 
-            const informacion =
+
+                bloque.className =
+                    "menu-section";
+
+
+                /*
+                 * Título
+                 */
+
+                const titulo =
+                    document.createElement(
+                        "h2"
+                    );
+
+
+                titulo.className =
+                    "menu-section-title";
+
+
+                titulo.textContent =
+                    seccion.nombre;
+
+
+                bloque.appendChild(
+                    titulo
+                );
+
+
+                /*
+                 * Descripción
+                 */
+
+                if (
+                    seccion.descripcion
+                ) {
+
+                    const descripcion =
+                        document.createElement(
+                            "p"
+                        );
+
+
+                    descripcion.className =
+                        "menu-section-description";
+
+
+                    descripcion.textContent =
+                        seccion.descripcion;
+
+
+                    bloque.appendChild(
+                        descripcion
+                    );
+
+                }
+
+
+                /*
+                 * Contenedor
+                 */
+
+                const lista =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                lista.className =
+                    "menu-section-items";
+
+
+                productosSeccion.forEach(
+                    function(producto) {
+
+                        lista.appendChild(
+                            crearTarjetaProducto(
+                                producto
+                            )
+                        );
+
+                    }
+                );
+
+
+                bloque.appendChild(
+                    lista
+                );
+
+
+                contenedor.appendChild(
+                    bloque
+                );
+
+            }
+        );
+
+
+        /*
+         * Productos que no pertenecen
+         * a una sección activa.
+         *
+         * Los mostramos también para
+         * no perder productos.
+         */
+
+        const productosSinSeccion =
+            productosActivos.filter(
+                function(producto) {
+
+                    return !seccionesActivas.some(
+                        function(seccion) {
+
+                            return (
+                                String(
+                                    producto.seccion
+                                ) ===
+                                String(
+                                    seccion.id
+                                ) ||
+                                String(
+                                    producto.seccion
+                                ) ===
+                                String(
+                                    seccion.nombre
+                                )
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        if (
+            productosSinSeccion.length > 0
+        ) {
+
+            const lista =
                 document.createElement(
                     "div"
                 );
 
 
-            informacion.className =
-                "menu-item-info";
+            lista.className =
+                "menu-section-items";
 
 
-            /*
-             * Nombre
-             */
+            productosSinSeccion.forEach(
+                function(producto) {
 
-            const nombre =
-                document.createElement(
-                    "h3"
-                );
+                    lista.appendChild(
+                        crearTarjetaProducto(
+                            producto
+                        )
+                    );
 
-
-            nombre.textContent =
-                producto.nombre ||
-                "Producto";
-
-
-            /*
-             * Descripción
-             */
-
-            const descripcion =
-                document.createElement(
-                    "p"
-                );
-
-
-            descripcion.textContent =
-                producto.descripcion ||
-                "";
-
-
-            /*
-             * Precio
-             */
-
-            const precio =
-                document.createElement(
-                    "strong"
-                );
-
-
-            precio.className =
-                "price";
-
-
-            precio.textContent =
-                formatearPrecio(
-                    producto.precio
-                );
-
-
-            /*
-             * Armar tarjeta
-             */
-
-            informacion.appendChild(
-                nombre
+                }
             );
-
-
-            if (
-                producto.descripcion
-            ) {
-
-                informacion.appendChild(
-                    descripcion
-                );
-
-            }
-
-
-            tarjeta.appendChild(
-                informacion
-            );
-
-
-            tarjeta.appendChild(
-                precio
-            );
-
-
-            /*
-             * Imagen
-             *
-             * La agregaremos cuando
-             * conectemos Google Drive.
-             */
-
-            if (
-                producto.imagen
-            ) {
-
-                tarjeta.classList.add(
-                    "tiene-imagen"
-                );
-
-            }
 
 
             contenedor.appendChild(
-                tarjeta
+                lista
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+    /*
+     * =================================================
+     * SIN SECCIONES
+     * =================================================
+     */
+
+    const lista =
+        document.createElement(
+            "div"
+        );
+
+
+    lista.className =
+        "menu-section-items";
+
+
+    productosActivos.forEach(
+        function(producto) {
+
+            lista.appendChild(
+                crearTarjetaProducto(
+                    producto
+                )
             );
 
         }
     );
+
+
+    contenedor.appendChild(
+        lista
+    );
+
+}
+
+
+/* =========================================================
+   CREAR TARJETA DE PRODUCTO
+========================================================= */
+
+function crearTarjetaProducto(
+    producto
+) {
+
+    const tarjeta =
+        document.createElement(
+            "article"
+        );
+
+
+    tarjeta.className =
+        "menu-item";
+
+
+    tarjeta.dataset.productId =
+        producto.id;
+
+
+    /*
+     * =================================================
+     * IMAGEN
+     * =================================================
+     */
+
+    if (
+        producto.imagen
+    ) {
+
+        const imagen =
+            document.createElement(
+                "img"
+            );
+
+
+        imagen.className =
+            "menu-item-image";
+
+
+        imagen.src =
+            producto.imagen;
+
+
+        imagen.alt =
+            producto.nombre ||
+            "Producto";
+
+
+        imagen.loading =
+            "lazy";
+
+
+        imagen.onerror =
+            function() {
+
+                imagen.style.display =
+                    "none";
+
+            };
+
+
+        tarjeta.appendChild(
+            imagen
+        );
+
+
+        tarjeta.classList.add(
+            "tiene-imagen"
+        );
+
+    }
+
+
+    /*
+     * =================================================
+     * INFORMACIÓN
+     * =================================================
+     */
+
+    const informacion =
+        document.createElement(
+            "div"
+        );
+
+
+    informacion.className =
+        "menu-item-info";
+
+
+    /*
+     * Nombre
+     */
+
+    const nombre =
+        document.createElement(
+            "h3"
+        );
+
+
+    nombre.textContent =
+        producto.nombre ||
+        "Producto";
+
+
+    informacion.appendChild(
+        nombre
+    );
+
+
+    /*
+     * Descripción
+     */
+
+    if (
+        producto.descripcion
+    ) {
+
+        const descripcion =
+            document.createElement(
+                "p"
+            );
+
+
+        descripcion.textContent =
+            producto.descripcion;
+
+
+        informacion.appendChild(
+            descripcion
+        );
+
+    }
+
+
+    tarjeta.appendChild(
+        informacion
+    );
+
+
+    /*
+     * =================================================
+     * PRECIO
+     * =================================================
+     */
+
+    const precio =
+        document.createElement(
+            "strong"
+        );
+
+
+    precio.className =
+        "price";
+
+
+    precio.textContent =
+        formatearPrecio(
+            producto.precio
+        );
+
+
+    tarjeta.appendChild(
+        precio
+    );
+
+
+    return tarjeta;
 
 }
 
@@ -522,11 +917,33 @@ function formatearPrecio(
     }
 
 
+    const numero =
+        Number(
+            String(precio)
+                .replace(
+                    /[^0-9.-]/g,
+                    ""
+                )
+        );
+
+
+    if (
+        isNaN(numero)
+    ) {
+
+        return "$0";
+
+    }
+
+
     return "$" +
-        Number(precio)
-            .toLocaleString(
-                "es-MX"
-            );
+        numero.toLocaleString(
+            "es-MX",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }
+        );
 
 }
 
@@ -544,6 +961,44 @@ function limpiarTelefono(
     ).replace(
         /\D/g,
         ""
+    );
+
+}
+
+
+/* =========================================================
+   MOSTRAR ERROR
+========================================================= */
+
+function mostrarError(
+    mensaje
+) {
+
+    const contenedor =
+        document.getElementById(
+            "productos"
+        );
+
+
+    if (!contenedor) {
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML = `
+
+        <p class="sin-productos">
+            No pudimos cargar el menú
+            en este momento.
+        </p>
+
+    `;
+
+
+    console.error(
+        mensaje
     );
 
 }
