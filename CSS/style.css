@@ -178,7 +178,7 @@ a {
     align-items: center;
 
     background:
-        var(--amarillo);
+        #ff6f00;
 
     padding:
         70px 0;
