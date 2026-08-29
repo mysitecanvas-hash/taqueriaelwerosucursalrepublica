@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Panel | Taquería El Güero</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f3f3f3;
+
+            color: #222;
+
+        }
+
+
+        /* =================================================
+           HEADER
+        ================================================= */
+
+        .header {
+
+            background: #151515;
+
+            color: white;
+
+            padding: 20px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .header h1 {
+
+            font-size: 22px;
+
+        }
+
+
+        .header span {
+
+            color: #f39a24;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================================
+           CONTENEDOR
+        ================================================= */
+
+        .container {
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 30px 20px;
+
+        }
+
+
+        /* =================================================
+           TARJETAS
+        ================================================= */
+
+        .card {
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0,0,0,.08);
+
+        }
+
+
+        .card h2 {
+
+            margin-bottom: 20px;
+
+            font-size: 21px;
+
+        }
+
+
+        /* =================================================
+           FORMULARIOS
+        ================================================= */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(250px, 1fr)
+                );
+
+            gap: 18px;
+
+        }
+
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+        }
+
+
+        .field label {
+
+            font-weight: bold;
+
+            font-size: 14px;
+
+        }
+
+
+        .field input,
+        .field textarea {
+
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+        }
+
+
+        .field textarea {
+
+            min-height: 90px;
+
+            resize: vertical;
+
+        }
+
+
+        /* =================================================
+           BOTONES
+        ================================================= */
+
+        button {
+
+            border: none;
+
+            border-radius: 7px;
+
+            padding: 10px 16px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+        }
+
+
+        .btn-primary {
+
+            background: #c84b08;
+
+            color: white;
+
+        }
+
+
+        .btn-primary:hover {
+
+            background: #a93d06;
+
+        }
+
+
+        .btn-secondary {
+
+            background: #ddd;
+
+            color: #222;
+
+        }
+
+
+        .btn-danger {
+
+            background: #c62828;
+
+            color: white;
+
+        }
+
+
+        .actions {
+
+            margin-top: 20px;
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        /* =================================================
+           PRODUCTOS
+        ================================================= */
+
+        .products {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 1fr)
+                );
+
+            gap: 18px;
+
+        }
+
+
+        .product {
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            padding: 18px;
+
+            background: #fafafa;
+
+        }
+
+
+        .product h3 {
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .product-description {
+
+            color: #666;
+
+            font-size: 14px;
+
+            min-height: 35px;
+
+        }
+
+
+        .product-price {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #c84b08;
+
+            margin: 12px 0;
+
+        }
+
+
+        .product-status {
+
+            font-size: 13px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .activo {
+
+            color: green;
+
+            font-weight: bold;
+
+        }
+
+
+        .inactivo {
+
+            color: red;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================================
+           SECCIONES
+        ================================================= */
+
+        .sections {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(250px, 1fr)
+                );
+
+            gap: 15px;
+
+        }
+
+
+        .section {
+
+            border: 1px solid #ddd;
+
+            padding: 16px;
+
+            border-radius: 10px;
+
+        }
+
+
+        /* =================================================
+           ESTADO
+        ================================================= */
+
+        #estado {
+
+            position: fixed;
+
+            bottom: 20px;
+
+            right: 20px;
+
+            background: #151515;
+
+            color: white;
+
+            padding: 13px 18px;
+
+            border-radius: 8px;
+
+            display: none;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,.25);
+
+        }
+
+
+        /* =================================================
+           MODAL
+        ================================================= */
+
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0,0,0,.6);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 200;
+
+            padding: 20px;
+
+        }
+
+
+        .modal-content {
+
+            background: white;
+
+            width: 100%;
+
+            max-width: 600px;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+        }
+
+
+        .modal-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .close {
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .header {
+
+                padding: 15px;
+
+            }
+
+            .header h1 {
+
+                font-size: 18px;
+
+            }
+
+            .container {
+
+                padding: 20px 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <h1>
+        🌮 Taquería El Güero
+    </h1>
+
+    <span>
+        PANEL ADMIN
+    </span>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- =================================================
+         CONFIGURACIÓN
+    ================================================== -->
+
+    <section class="card">
+
+        <h2>
+            ⚙️ Información del negocio
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <div class="field">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    id="nombre"
+                    type="text">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Sucursal
+                </label>
+
+                <input
+                    id="sucursal"
+                    type="text">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    WhatsApp
+                </label>
+
+                <input
+                    id="whatsapp"
+                    type="text">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Facebook
+                </label>
+
+                <input
+                    id="facebook"
+                    type="text">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Google Maps
+                </label>
+
+                <input
+                    id="maps"
+                    type="text">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Dirección
+                </label>
+
+                <input
+                    id="direccion"
+                    type="text">
+
+            </div>
+
+
+            <div
+                class="field"
+                style="grid-column:1/-1">
+
+                <label>
+                    Descripción
+                </label>
+
+                <textarea
+                    id="descripcion">
+                </textarea>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn-primary"
+                onclick="guardarConfiguracion()">
+
+                💾 Guardar configuración
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PRODUCTOS
+    ================================================== -->
+
+    <section class="card">
+
+        <h2>
+            🌮 Productos
+        </h2>
+
+
+        <div
+            id="productos"
+            class="products">
+
+            Cargando productos...
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn-primary"
+                onclick="nuevoProducto()">
+
+                ➕ Agregar producto
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SECCIONES
+    ================================================== -->
+
+    <section class="card">
+
+        <h2>
+            🧩 Secciones
+        </h2>
+
+
+        <div
+            id="secciones"
+            class="sections">
+
+            Cargando secciones...
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn-primary"
+                onclick="nuevaSeccion()">
+
+                ➕ Agregar sección
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =====================================================
+     MODAL PRODUCTO
+====================================================== -->
+
+<div
+    id="modalProducto"
+    class="modal">
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                🌮 Producto
+            </h2>
+
+            <span
+                class="close"
+                onclick="cerrarModal('modalProducto')">
+
+                ×
+
+            </span>
+
+        </div>
+
+
+        <input
+            id="producto-id"
+            type="hidden">
+
+
+        <div class="form-grid">
+
+
+            <div class="field">
+
+                <label>
+                    Sección
+                </label>
+
+                <input
+                    id="producto-seccion"
+                    type="text"
+                    placeholder="tacos">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    id="producto-nombre"
+                    type="text">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Precio
+                </label>
+
+                <input
+                    id="producto-precio"
+                    type="number"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Orden
+                </label>
+
+                <input
+                    id="producto-orden"
+                    type="number">
+
+            </div>
+
+
+            <div
+                class="field"
+                style="grid-column:1/-1">
+
+                <label>
+                    Descripción
+                </label>
+
+                <textarea
+                    id="producto-descripcion">
+                </textarea>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Imagen
+                </label>
+
+                <input
+                    id="producto-imagen"
+                    type="text"
+                    placeholder="URL de imagen">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Activo
+                </label>
+
+                <select
+                    id="producto-activo">
+
+                    <option value="true">
+                        Sí
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn-primary"
+                onclick="guardarProducto()">
+
+                💾 Guardar
+
+            </button>
+
+            <button
+                class="btn-secondary"
+                onclick="cerrarModal('modalProducto')">
+
+                Cancelar
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL SECCIÓN
+====================================================== -->
+
+<div
+    id="modalSeccion"
+    class="modal">
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                🧩 Sección
+            </h2>
+
+            <span
+                class="close"
+                onclick="cerrarModal('modalSeccion')">
+
+                ×
+
+            </span>
+
+        </div>
+
+
+        <input
+            id="seccion-id"
+            type="hidden">
+
+
+        <div class="form-grid">
+
+
+            <div class="field">
+
+                <label>
+                    Nombre
+                </label>
+
+                <input
+                    id="seccion-nombre"
+                    type="text">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Orden
+                </label>
+
+                <input
+                    id="seccion-orden"
+                    type="number">
+
+            </div>
+
+
+            <div
+                class="field"
+                style="grid-column:1/-1">
+
+                <label>
+                    Descripción
+                </label>
+
+                <textarea
+                    id="seccion-descripcion">
+                </textarea>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Activa
+                </label>
+
+                <select
+                    id="seccion-activo">
+
+                    <option value="true">
+                        Sí
+                    </option>
+
+                    <option value="false">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn-primary"
+                onclick="guardarSeccion()">
+
+                💾 Guardar
+
+            </button>
+
+            <button
+                class="btn-secondary"
+                onclick="cerrarModal('modalSeccion')">
+
+                Cancelar
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div id="estado"></div>
+
+
+<script>
+
+
+/* =====================================================
+   API
+===================================================== */
+
+const API_URL =
+    "https://script.google.com/macros/s/AKfycbyhTrk3B-qa_U5KSYRGZ0VLoo_GcUySiF9WatT2q_O9DCTAZk5-ILEx4r9kxf6iMDGFrg/exec";
+
+
+let datosActuales = {
+
+    config: {},
+
+    productos: [],
+
+    secciones: []
+
+};
+
+
+/* =====================================================
+   CARGAR TODO
+===================================================== */
+
+async function cargarTodo() {
+
+    mostrarEstado(
+        "Cargando información..."
+    );
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                API_URL +
+                "?accion=todo"
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (!datos.ok) {
+
+            throw new Error(
+                datos.error
+            );
+
+        }
+
+
+        datosActuales =
+            datos;
+
+
+        cargarConfiguracion(
+            datos.config
+        );
+
+
+        mostrarProductos(
+            datos.productos
+        );
+
+
+        mostrarSecciones(
+            datos.secciones
+        );
+
+
+        mostrarEstado(
+            "Información cargada"
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(error);
+
+        mostrarEstado(
+            "Error al cargar información"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+function cargarConfiguracion(
+    config
+) {
+
+    document.getElementById(
+        "nombre"
+    ).value =
+        config.nombre || "";
+
+
+    document.getElementById(
+        "sucursal"
+    ).value =
+        config.sucursal || "";
+
+
+    document.getElementById(
+        "descripcion"
+    ).value =
+        config.descripcion || "";
+
+
+    document.getElementById(
+        "whatsapp"
+    ).value =
+        config.whatsapp || "";
+
+
+    document.getElementById(
+        "facebook"
+    ).value =
+        config.facebook || "";
+
+
+    document.getElementById(
+        "maps"
+    ).value =
+        config.maps || "";
+
+
+    document.getElementById(
+        "direccion"
+    ).value =
+        config.direccion || "";
+
+}
+
+
+/* =====================================================
+   MOSTRAR PRODUCTOS
+===================================================== */
+
+function mostrarProductos(
+    productos
+) {
+
+    const contenedor =
+        document.getElementById(
+            "productos"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    if (
+        !productos ||
+        productos.length === 0
+    ) {
+
+        contenedor.innerHTML =
+            "<p>No hay productos.</p>";
+
+        return;
+
+    }
+
+
+    productos.forEach(
+        producto => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "product";
+
+
+            div.innerHTML = `
+
+                <h3>
+                    ${escaparHTML(
+                        producto.nombre
+                    )}
+                </h3>
+
+                <div class="product-description">
+                    ${escaparHTML(
+                        producto.descripcion || ""
+                    )}
+                </div>
+
+                <div class="product-price">
+                    $${producto.precio}
+                </div>
+
+                <div class="product-status">
+
+                    Estado:
+
+                    <span class="${
+                        producto.activo
+                        ? "activo"
+                        : "inactivo"
+                    }">
+
+                        ${
+                            producto.activo
+                            ? "Activo"
+                            : "Inactivo"
+                        }
+
+                    </span>
+
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        class="btn-primary"
+                        onclick="editarProducto(${producto.id})">
+
+                        ✏️ Editar
+
+                    </button>
+
+                    <button
+                        class="btn-danger"
+                        onclick="desactivarProducto(${producto.id})">
+
+                        🗑️ Desactivar
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   MOSTRAR SECCIONES
+===================================================== */
+
+function mostrarSecciones(
+    secciones
+) {
+
+    const contenedor =
+        document.getElementById(
+            "secciones"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    secciones.forEach(
+        seccion => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "section";
+
+
+            div.innerHTML = `
+
+                <h3>
+                    ${escaparHTML(
+                        seccion.nombre
+                    )}
+                </h3>
+
+                <p>
+                    ${escaparHTML(
+                        seccion.descripcion || ""
+                    )}
+                </p>
+
+                <br>
+
+                <strong>
+                    ${
+                        seccion.activo
+                        ? "Activa"
+                        : "Inactiva"
+                    }
+                </strong>
+
+                <div class="actions">
+
+                    <button
+                        class="btn-primary"
+                        onclick="editarSeccion(${seccion.id})">
+
+                        ✏️ Editar
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   EDITAR PRODUCTO
+===================================================== */
+
+function editarProducto(
+    id
+) {
+
+    const producto =
+        datosActuales.productos.find(
+            p =>
+                String(p.id) ===
+                String(id)
+        );
+
+
+    if (!producto) {
+        return;
+    }
+
+
+    document.getElementById(
+        "producto-id"
+    ).value =
+        producto.id;
+
+
+    document.getElementById(
+        "producto-seccion"
+    ).value =
+        producto.seccion || "";
+
+
+    document.getElementById(
+        "producto-nombre"
+    ).value =
+        producto.nombre || "";
+
+
+    document.getElementById(
+        "producto-descripcion"
+    ).value =
+        producto.descripcion || "";
+
+
+    document.getElementById(
+        "producto-precio"
+    ).value =
+        producto.precio || 0;
+
+
+    document.getElementById(
+        "producto-imagen"
+    ).value =
+        producto.imagen || "";
+
+
+    document.getElementById(
+        "producto-orden"
+    ).value =
+        producto.orden || 0;
+
+
+    document.getElementById(
+        "producto-activo"
+    ).value =
+        producto.activo
+        ? "true"
+        : "false";
+
+
+    abrirModal(
+        "modalProducto"
+    );
+
+}
+
+
+/* =====================================================
+   NUEVO PRODUCTO
+===================================================== */
+
+function nuevoProducto() {
+
+    document.getElementById(
+        "producto-id"
+    ).value = "";
+
+
+    document.getElementById(
+        "producto-seccion"
+    ).value = "tacos";
+
+
+    document.getElementById(
+        "producto-nombre"
+    ).value = "";
+
+
+    document.getElementById(
+        "producto-descripcion"
+    ).value = "";
+
+
+    document.getElementById(
+        "producto-precio"
+    ).value = "";
+
+
+    document.getElementById(
+        "producto-imagen"
+    ).value = "";
+
+
+    document.getElementById(
+        "producto-orden"
+    ).value = "1";
+
+
+    document.getElementById(
+        "producto-activo"
+    ).value = "true";
+
+
+    abrirModal(
+        "modalProducto"
+    );
+
+}
+
+
+/* =====================================================
+   EDITAR SECCIÓN
+===================================================== */
+
+function editarSeccion(
+    id
+) {
+
+    const seccion =
+        datosActuales.secciones.find(
+            s =>
+                String(s.id) ===
+                String(id)
+        );
+
+
+    if (!seccion) {
+        return;
+    }
+
+
+    document.getElementById(
+        "seccion-id"
+    ).value =
+        seccion.id;
+
+
+    document.getElementById(
+        "seccion-nombre"
+    ).value =
+        seccion.nombre || "";
+
+
+    document.getElementById(
+        "seccion-descripcion"
+    ).value =
+        seccion.descripcion || "";
+
+
+    document.getElementById(
+        "seccion-orden"
+    ).value =
+        seccion.orden || 0;
+
+
+    document.getElementById(
+        "seccion-activo"
+    ).value =
+        seccion.activo
+        ? "true"
+        : "false";
+
+
+    abrirModal(
+        "modalSeccion"
+    );
+
+}
+
+
+/* =====================================================
+   NUEVA SECCIÓN
+===================================================== */
+
+function nuevaSeccion() {
+
+    document.getElementById(
+        "seccion-id"
+    ).value = "";
+
+
+    document.getElementById(
+        "seccion-nombre"
+    ).value = "";
+
+
+    document.getElementById(
+        "seccion-descripcion"
+    ).value = "";
+
+
+    document.getElementById(
+        "seccion-orden"
+    ).value = "1";
+
+
+    document.getElementById(
+        "seccion-activo"
+    ).value = "true";
+
+
+    abrirModal(
+        "modalSeccion"
+    );
+
+}
+
+
+/* =====================================================
+   GUARDAR CONFIGURACIÓN
+===================================================== */
+
+async function guardarConfiguracion() {
+
+    const config = {
+
+        nombre:
+            document.getElementById(
+                "nombre"
+            ).value,
+
+        sucursal:
+            document.getElementById(
+                "sucursal"
+            ).value,
+
+        descripcion:
+            document.getElementById(
+                "descripcion"
+            ).value,
+
+        whatsapp:
+            document.getElementById(
+                "whatsapp"
+            ).value,
+
+        facebook:
+            document.getElementById(
+                "facebook"
+            ).value,
+
+        maps:
+            document.getElementById(
+                "maps"
+            ).value,
+
+        direccion:
+            document.getElementById(
+                "direccion"
+            ).value
+
+    };
+
+
+    await enviarPOST({
+
+        accion:
+            "guardarConfig",
+
+        data:
+            config
+
+    });
+
+}
+
+
+/* =====================================================
+   GUARDAR PRODUCTO
+===================================================== */
+
+async function guardarProducto() {
+
+    const producto = {
+
+        id:
+            document.getElementById(
+                "producto-id"
+            ).value || null,
+
+        seccion:
+            document.getElementById(
+                "producto-seccion"
+            ).value,
+
+        nombre:
+            document.getElementById(
+                "producto-nombre"
+            ).value,
+
+        descripcion:
+            document.getElementById(
+                "producto-descripcion"
+            ).value,
+
+        precio:
+            document.getElementById(
+                "producto-precio"
+            ).value,
+
+        imagen:
+            document.getElementById(
+                "producto-imagen"
+            ).value,
+
+        activo:
+            document.getElementById(
+                "producto-activo"
+            ).value === "true",
+
+        orden:
+            document.getElementById(
+                "producto-orden"
+            ).value
+
+    };
+
+
+    await enviarPOST({
+
+        accion:
+            "guardarProducto",
+
+        data:
+            producto
+
+    });
+
+
+    cerrarModal(
+        "modalProducto"
+    );
+
+
+    setTimeout(
+        cargarTodo,
+        800
+    );
+
+}
+
+
+/* =====================================================
+   GUARDAR SECCIÓN
+===================================================== */
+
+async function guardarSeccion() {
+
+    const seccion = {
+
+        id:
+            document.getElementById(
+                "seccion-id"
+            ).value || null,
+
+        nombre:
+            document.getElementById(
+                "seccion-nombre"
+            ).value,
+
+        descripcion:
+            document.getElementById(
+                "seccion-descripcion"
+            ).value,
+
+        activo:
+            document.getElementById(
+                "seccion-activo"
+            ).value === "true",
+
+        orden:
+            document.getElementById(
+                "seccion-orden"
+            ).value
+
+    };
+
+
+    await enviarPOST({
+
+        accion:
+            "guardarSeccion",
+
+        data:
+            seccion
+
+    });
+
+
+    cerrarModal(
+        "modalSeccion"
+    );
+
+
+    setTimeout(
+        cargarTodo,
+        800
+    );
+
+}
+
+
+/* =====================================================
+   DESACTIVAR PRODUCTO
+===================================================== */
+
+async function desactivarProducto(
+    id
+) {
+
+    const producto =
+        datosActuales.productos.find(
+            p =>
+                String(p.id) ===
+                String(id)
+        );
+
+
+    if (!producto) {
+        return;
+    }
+
+
+    producto.activo =
+        false;
+
+
+    await enviarPOST({
+
+        accion:
+            "guardarProducto",
+
+        data:
+            producto
+
+    });
+
+
+    setTimeout(
+        cargarTodo,
+        800
+    );
+
+}
+
+
+/* =====================================================
+   POST
+===================================================== */
+
+async function enviarPOST(
+    datos
+) {
+
+    mostrarEstado(
+        "Guardando..."
+    );
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                API_URL,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            datos
+                        )
+
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!resultado.ok) {
+
+            throw new Error(
+                resultado.error
+            );
+
+        }
+
+
+        mostrarEstado(
+            "Guardado correctamente"
+        );
+
+
+        return resultado;
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        mostrarEstado(
+            "Error al guardar"
+        );
+
+
+        alert(
+            "No se pudo guardar: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MODALES
+===================================================== */
+
+function abrirModal(
+    id
+) {
+
+    document.getElementById(
+        id
+    ).style.display =
+        "flex";
+
+}
+
+
+function cerrarModal(
+    id
+) {
+
+    document.getElementById(
+        id
+    ).style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+function mostrarEstado(
+    mensaje
+) {
+
+    const estado =
+        document.getElementById(
+            "estado"
+        );
+
+
+    estado.textContent =
+        mensaje;
+
+
+    estado.style.display =
+        "block";
+
+
+    setTimeout(
+        function() {
+
+            estado.style.display =
+                "none";
+
+        },
+        2500
+    );
+
+}
+
+
+/* =====================================================
+   SEGURIDAD HTML
+===================================================== */
+
+function escaparHTML(
+    texto
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        texto ?? "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   INICIO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    cargarTodo
+);
+
+
+</script>
+
+
+</body>
+
+</html>
