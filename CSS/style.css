@@ -418,12 +418,12 @@ a {
 
     justify-content: center;
 
-    background:
+    /*background:
         var(--naranja);
 
     border:
         7px solid
-        var(--negro);
+        var(--negro);*/
 
     box-shadow:
         var(--sombra);
