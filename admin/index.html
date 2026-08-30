@@ -1612,13 +1612,21 @@ function mostrarSecciones(
                     }
                 </strong>
 
-                <div class="actions">
+                 <div class="actions">
 
                     <button
                         class="btn-primary"
                         onclick="editarSeccion(${seccion.id})">
 
                         ✏️ Editar
+
+                    </button>
+
+                    <button
+                        class="btn-danger"
+                        onclick="eliminarSeccion(${seccion.id})">
+
+                        🗑️ Eliminar
 
                     </button>
 
