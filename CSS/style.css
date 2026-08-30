@@ -608,37 +608,6 @@ a {
     font-weight: 700;
 }
 
-<!-- =====================================================
-     HORARIO
-====================================================== -->
-
-<section class="schedule-section">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <h2>
-                HORARIO DE SERVICIO
-            </h2>
-
-            <p>
-                Martes a jueves<br>
-                6pm a 12am
-            </p>
-
-            <p>
-                Viernes, sábado y domingo<br>
-                6pm a 1am
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
 /* =========================================================
  MENÚ
 ========================================================= */
