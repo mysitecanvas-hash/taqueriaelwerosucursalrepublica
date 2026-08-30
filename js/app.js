@@ -483,18 +483,10 @@ function mostrarProductos(
                             function(producto) {
 
                                 return (
-                                    String(
-                                        producto.seccion
-                                    ) ===
-                                    String(
-                                        seccion.id
-                                    ) ||
-                                    String(
-                                        producto.seccion
-                                    ) ===
-                                    String(
-                                        seccion.nombre
-                                    )
+                                    String(producto.seccion).trim().toLowerCase() ===
+                    String(seccion.id).trim().toLowerCase() ||
+                    String(producto.seccion).trim().toLowerCase() ===
+                    String(seccion.nombre).trim().toLowerCase()
                                 );
 
                             }
