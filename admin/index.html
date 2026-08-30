@@ -307,74 +307,72 @@
 
         .product {
 
-            border: 1px solid #ddd;
+    display: flex;
 
-            border-radius: 10px;
+    flex-wrap: wrap;
 
-            padding: 18px;
+    align-items: center;
 
-            background: #fafafa;
+    gap: 16px;
 
-        }
+    padding: 14px 18px;
 
+    border: 1px solid #ddd;
 
-        .product h3 {
+    border-radius: 10px;
 
-            margin-bottom: 8px;
+    background: #fafafa;
 
-        }
-
-
-        .product-description {
-
-            color: #666;
-
-            font-size: 14px;
-
-            min-height: 35px;
-
-        }
+}
 
 
-        .product-price {
+.product-row-nombre {
 
-            font-size: 22px;
+    flex: 1 1 180px;
 
-            font-weight: bold;
+    font-weight: 700;
 
-            color: #c84b08;
-
-            margin: 12px 0;
-
-        }
+}
 
 
-        .product-status {
+.product-row-precio {
 
-            font-size: 13px;
+    flex: 0 0 auto;
 
-            margin-bottom: 12px;
+    font-size: 18px;
 
-        }
+    font-weight: bold;
 
+    color: #c84b08;
 
-        .activo {
-
-            color: green;
-
-            font-weight: bold;
-
-        }
+}
 
 
-        .inactivo {
+.product-row-estado {
 
-            color: red;
+    flex: 0 0 auto;
 
-            font-weight: bold;
+    font-size: 13px;
 
-        }
+}
 
+
+.product-row-estado.activo {
+
+    color: green;
+
+    font-weight: bold;
+
+}
+
+
+.product-row-estado.inactivo {
+
+    color: red;
+
+    font-weight: bold;
+
+}
 
         /* =================================================
            SECCIONES
