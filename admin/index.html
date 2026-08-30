@@ -1277,43 +1277,31 @@ function crearTarjetaProducto(
         "product";
 
 
-    div.innerHTML = `
+       div.innerHTML = `
 
-        <h3>
+        <span class="product-row-nombre">
             ${escaparHTML(
                 producto.nombre
             )}
-        </h3>
+        </span>
 
-        <div class="product-description">
-            ${escaparHTML(
-                producto.descripcion || ""
-            )}
-        </div>
-
-        <div class="product-price">
+        <span class="product-row-precio">
             $${producto.precio}
-        </div>
+        </span>
 
-        <div class="product-status">
+        <span class="product-row-estado ${
+            producto.activo
+            ? "activo"
+            : "inactivo"
+        }">
 
-            Estado:
-
-            <span class="${
+            ${
                 producto.activo
-                ? "activo"
-                : "inactivo"
-            }">
+                ? "Activo"
+                : "Inactivo"
+            }
 
-                ${
-                    producto.activo
-                    ? "Activo"
-                    : "Inactivo"
-                }
-
-            </span>
-
-        </div>
+        </span>
 
         <div class="actions">
 
@@ -1327,9 +1315,9 @@ function crearTarjetaProducto(
 
             <button
                 class="btn-danger"
-                onclick="desactivarProducto(${producto.id})">
+                onclick="eliminarProducto(${producto.id})">
 
-                🗑️ Desactivar
+                🗑️ Eliminar
 
             </button>
 
