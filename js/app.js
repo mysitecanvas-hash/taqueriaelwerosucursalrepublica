@@ -19,25 +19,84 @@ const API_URL =
 
 async function cargarSitio() {
 
+    const contenedor =
+        document.getElementById("productos");
+
     try {
 
         console.log(
             "Conectando con Taquería El Güero..."
         );
 
+        /*
+         * Indicador temporal
+         */
+        if (contenedor) {
 
-        const respuesta =
-            await fetch(
-                API_URL +
-                "?accion=todo&t=" +
-                Date.now()
+            contenedor.innerHTML = `
+                <p class="menu-loading">
+                    Cargando menú...
+                </p>
+            `;
+
+        }
+
+        /*
+         * URL única para evitar caché
+         */
+        const url =
+            API_URL +
+            "?accion=todo&t=" +
+            Date.now();
+
+        /*
+         * Timeout de 15 segundos
+         */
+        const controlador =
+            new AbortController();
+
+        const temporizador =
+            setTimeout(
+                function() {
+
+                    controlador.abort();
+
+                },
+                15000
             );
+
+        /*
+         * Primera petición
+         */
+        let respuesta;
+
+        try {
+
+            respuesta =
+                await fetch(
+                    url,
+                    {
+                        method: "GET",
+                        cache: "no-store",
+                        signal:
+                            controlador.signal
+                    }
+                );
+
+        }
+        finally {
+
+            clearTimeout(
+                temporizador
+            );
+
+        }
 
 
         if (!respuesta.ok) {
 
             throw new Error(
-                "No se pudo conectar con la API. HTTP " +
+                "HTTP " +
                 respuesta.status
             );
 
@@ -49,16 +108,16 @@ async function cargarSitio() {
 
 
         console.log(
-            "Datos recibidos:",
+            "Respuesta completa:",
             datos
         );
 
 
-        if (!datos.ok) {
+        if (!datos || !datos.ok) {
 
             throw new Error(
-                datos.error ||
-                "La API devolvió un error."
+                datos?.error ||
+                "La API devolvió una respuesta inválida."
             );
 
         }
@@ -66,22 +125,19 @@ async function cargarSitio() {
 
         /*
          * =================================================
-         * OBTENER INFORMACIÓN
-         *
-         * Aceptamos tanto:
-         *
-         * datos.config
-         *
-         * como:
-         *
-         * datos.data.config
-         *
-         * Esto hace el sistema más resistente.
+         * NORMALIZAR RESPUESTA
          * =================================================
          */
 
         const contenido =
-            datos.data || datos;
+            datos.data &&
+            (
+                datos.data.config ||
+                datos.data.productos ||
+                datos.data.secciones
+            )
+                ? datos.data
+                : datos;
 
 
         const config =
@@ -91,32 +147,48 @@ async function cargarSitio() {
 
 
         const productos =
-            contenido.productos ||
-            datos.productos ||
-            [];
+            Array.isArray(
+                contenido.productos
+            )
+                ? contenido.productos
+                : (
+                    Array.isArray(
+                        datos.productos
+                    )
+                        ? datos.productos
+                        : []
+                );
 
 
         const secciones =
-            contenido.secciones ||
-            datos.secciones ||
-            [];
+            Array.isArray(
+                contenido.secciones
+            )
+                ? contenido.secciones
+                : (
+                    Array.isArray(
+                        datos.secciones
+                    )
+                        ? datos.secciones
+                        : []
+                );
 
 
         console.log(
-            "Configuración:",
+            "Config:",
             config
         );
 
 
         console.log(
-            "Productos:",
-            productos
+            "Productos recibidos:",
+            productos.length
         );
 
 
         console.log(
-            "Secciones:",
-            secciones
+            "Secciones recibidas:",
+            secciones.length
         );
 
 
@@ -147,9 +219,8 @@ async function cargarSitio() {
             "Página cargada correctamente."
         );
 
+
     }
-
-
     catch (error) {
 
         console.error(
@@ -157,14 +228,43 @@ async function cargarSitio() {
             error
         );
 
-        mostrarError(
-            error.message
-        );
+
+        /*
+         * Intento de diagnóstico
+         */
+
+        if (contenedor) {
+
+            contenedor.innerHTML = `
+
+                <div class="menu-load-error">
+
+                    <strong>
+                        No pudimos cargar el menú.
+                    </strong>
+
+                    <p>
+                        Comprueba tu conexión a Internet
+                        y vuelve a intentarlo.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="cargarSitio()">
+
+                        Reintentar
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
 
     }
 
 }
-
 
 /* =========================================================
    CONFIGURACIÓN
