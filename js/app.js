@@ -29,7 +29,7 @@ async function cargarSitio() {
         const respuesta =
             await fetch(
                 API_URL +
-                "?accion=todo&_=" +
+                "?accion=todo&t=" +
                 Date.now()
             );
 
