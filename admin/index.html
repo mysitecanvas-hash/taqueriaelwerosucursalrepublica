@@ -2150,7 +2150,33 @@ async function guardarSeccion() {
 /* =====================================================
    DESACTIVAR PRODUCTO
 ===================================================== */
+async function eliminarProducto(
+    id
+) {
 
+    const confirmar =
+        confirm(
+            "¿Seguro que quieres eliminar este producto? Esta acción no se puede deshacer."
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    await enviarPOST({
+        accion:
+            "eliminarProducto",
+        id:
+            id
+    });
+
+    setTimeout(
+        cargarTodo,
+        800
+    );
+
+}
+    
 async function desactivarProducto(
     id
 ) {
