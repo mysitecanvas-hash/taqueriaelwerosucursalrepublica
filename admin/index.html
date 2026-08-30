@@ -1824,7 +1824,33 @@ function nuevoProducto(
 /* =====================================================
    EDITAR SECCIÓN
 ===================================================== */
+async function eliminarSeccion(
+    id
+) {
 
+    const confirmar =
+        confirm(
+            "¿Seguro que quieres eliminar esta sección? Esta acción no se puede deshacer."
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    await enviarPOST({
+        accion:
+            "eliminarSeccion",
+        id:
+            id
+    });
+
+    setTimeout(
+        cargarTodo,
+        800
+    );
+
+}
+    
 function editarSeccion(
     id
 ) {
